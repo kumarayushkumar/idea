@@ -6,14 +6,14 @@
             @auth
                 <form action="/logout" method="POST">
                     @csrf
-                    <button type="submit" class="text-sm text-foreground/70 hover:text-foreground transition">Logout</button>
-                @endauth
+                    <button type="submit" data-testId="logout-button" class="text-sm text-foreground/70 hover:text-foreground transition">Logout</button>
+                </form>
+            @endauth
 
-                @guest
-
-                    <a href="/login" class="text-sm text-foreground/70 hover:text-foreground transition">Login</a>
-                    <a href="/register" class="btn">Register</a>
-                @endguest
+            @guest
+                <a href="/login" class="text-sm text-foreground/70 hover:text-foreground transition">Login</a>
+                <a href="/register" class="btn">Register</a>
+            @endguest
         </div>
     </div>
 </nav>

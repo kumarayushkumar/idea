@@ -7,7 +7,7 @@
 
             <x-form.field label="Password" name="password" type="password" placeholder="********" />
 
-            <button type="submit" class="btn mt-2 h-10 w-full">Login</button>
+            <button type="submit" data-testId="login-button" class="btn mt-2 h-10 w-full">Login</button>
 
         </form>
     </x-form>

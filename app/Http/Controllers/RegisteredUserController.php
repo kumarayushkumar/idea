@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -9,7 +11,7 @@ use Illuminate\Validation\Rule;
 
 class RegisteredUserController extends Controller
 {
-    public function create()
+    public function create(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('auth.register');
     }

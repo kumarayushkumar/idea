@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,7 +14,8 @@ class Step extends Model
 
     protected $attributes = ['is_completed' => false];
 
-    public function idea() {
+    public function idea()
+    {
         return $this->belongsTo(Idea::class);
     }
 }

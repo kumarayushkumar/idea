@@ -3,7 +3,17 @@
         <h1 class="text-3xl font-bold">Your Ideas</h1>
     </div>
 
-    <div class="mt-10 text-muted-foreground">
+    <div class="mt-10">
+        <a href="/ideas" class="btn {{ request('status') === null ? '' : 'btn-outlined' }}">All Ideas</a>
+        @foreach (App\IdeaStatus::cases() as $status)
+            <a href="/ideas?status={{ $status->value }}"
+                class="btn {{ request('status') === $status->value ? '' : 'btn-outlined' }}">{{ $status->label() }} <span
+                    class="text-xs pl-2">{{ $statusCounts->get($status->value) }}</span></a>
+        @endforeach
+
+    </div>
+
+    <div class="mt-6 text-muted-foreground">
         <div class="grid md:grid-cols-2 gap-6">
             @forelse ($ideas as $idea)
                 <x-card href="{{ route('idea.show', $idea) }}">

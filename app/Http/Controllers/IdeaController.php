@@ -11,6 +11,7 @@ use App\IdeaStatus;
 use App\Models\Idea;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class IdeaController extends Controller
 {
@@ -55,6 +56,8 @@ class IdeaController extends Controller
      */
     public function show(Idea $idea): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
+        Gate::authorize('workWith', $idea);
+
         return view('idea.show', [
             'idea' => $idea,
         ]);
@@ -65,7 +68,7 @@ class IdeaController extends Controller
      */
     public function edit(Idea $idea): void
     {
-        //
+        Gate::authorize('workWith', $idea);
     }
 
     /**
@@ -73,7 +76,7 @@ class IdeaController extends Controller
      */
     public function update(UpdateIdeaRequest $request, Idea $idea): void
     {
-        //
+        Gate::authorize('workWith', $idea);
     }
 
     /**
@@ -81,6 +84,7 @@ class IdeaController extends Controller
      */
     public function destroy(Idea $idea): \Illuminate\Http\RedirectResponse
     {
+        Gate::authorize('workWith', $idea);
 
         $idea->delete();
 

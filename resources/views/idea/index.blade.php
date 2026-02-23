@@ -97,7 +97,7 @@
                             <input x-model="newStep" id="new-step" spellcheck="false" class="input flex-1"
                                 placeholder="What need to be done?" data-testId="create-idea-modal-step-input">
                             <button @click="steps.push(newStep), newStep = ''" type="button"
-                                :disabled="newStep.trim().length === 0" data-testId="create-idea-modal-new-step-button"
+                                :disabled="newStep.trim().length === 0" data-testId="create-idea-modal-add-step-button"
                                 aria-label="add new step button">
                                 <x-icons.add ::class="newStep.trim().length === 0 ? 'opacity-50' : ''" />
                             </button>

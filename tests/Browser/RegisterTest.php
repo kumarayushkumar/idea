@@ -11,7 +11,7 @@ test('registers a user', function (): void {
         ->fill('email', 'john@example.com')
         ->fill('password', 'password')
         ->click('[data-testid="register-button"]')
-        ->assertPathIs('/');
+        ->assertPathIs('/ideas');
 
     assertAuthenticated();
     expect(Auth::user())->toMatchArray([

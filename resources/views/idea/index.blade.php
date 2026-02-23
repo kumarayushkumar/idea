@@ -5,7 +5,8 @@
         </div>
 
         <x-card x-data @click="$dispatch('open-model','create-idea')" type="button" is="button"
-            class="mt-10 cursor-pointer w-full text-lg hover:bg-primary/20 transition duration-300">What's the
+            class="mt-10 cursor-pointer w-full text-lg hover:bg-primary/20 transition duration-300"
+            data-testId="create-idea-button">What's the
             Idea?</x-card>
 
         <div class="mt-10">
@@ -39,7 +40,7 @@
         </div>
 
         {{-- modal --}}
-        <x-modal name="create-idea" title="Create New Idea">
+        <x-modal name="create-idea" title="Create New Idea" data-testId="create-idea-modal">
             <form x-data="{ status: 'pending' }" action="{{ route('idea.store') }}" method="POST" class="space-y-6">
                 @csrf
 
@@ -50,7 +51,8 @@
 
                     <div class="flex gap-3 py-2">
                         @foreach (App\IdeaStatus::cases() as $status)
-                            <button class="btn flex-1" type="button" @click="status = '{{ $status->value }}'"
+                            <button data-testId="button-status-{{ $status->value }}" class="btn flex-1" type="button"
+                                @click="status = '{{ $status->value }}'"
                                 :class="status === '{{ $status->value }}' ? '' : 'btn-outlined'">{{ $status->label() }}</button>
                         @endforeach
                         <input type="text" name="status" id="status" class="hidden" :value="status">
@@ -61,8 +63,9 @@
                 <x-form.field label="Description" type="textarea" name="description" placeholder="Describe your idea" />
 
                 <div class="flex justify-end gap-5">
-                    <button type="button" class="btn btn-outlined" @click="$dispatch('close-model','create-idea')">Cancel</button>
-                    <button type="submit" class="btn">Create Idea</button>
+                    <button type="button" class="btn btn-outlined"
+                        @click="$dispatch('close-model','create-idea')">Cancel</button>
+                    <button type="submit" data-testId="create-idea-modal-submit-button" class="btn">Create Idea</button>
                 </div>
             </form>
         </x-modal>

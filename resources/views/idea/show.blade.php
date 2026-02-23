@@ -20,10 +20,11 @@
                         class="btn btn-outlined flex text-red-500 border-red-900 hover:bg-red-600/20 items-center">
                         Delete
                     </button>
+                </form>
             </div>
         </div>
 
-        <h1 class="font bold text-3xl mt-5">{{ $idea->title }}</h1>
+        <h1 class="font-bold text-3xl mt-5">{{ $idea->title }}</h1>
 
         <div class="mt-4 flex items-center gap-4">
             <x-idea.status-label status="{{ $idea->status }}">{{ $idea->status->label() }}</x-idea.status-label>
@@ -33,6 +34,33 @@
         <x-card class="mt-6">
             <p class="text-lg">{{ $idea->description }}</p>
         </x-card>
+
+        @if ($idea->steps)
+
+            <div class="mt-10">
+                <h3 class="font-semibold text-xl">Steps</h3>
+                <div class="space-y-2 mt-4">
+                    @foreach ($idea->steps as $step)
+                        <x-card is="div" class="">
+
+                            <form action="{{ route('step.update', $step) }}" method="POST"
+                                class="flex items-center gap-3">
+                                @csrf
+                                @method('PATCH')
+
+                                <button type="submit" role="checkbox"
+                                    class="size-5 flex items-center justify-center rounded-md text-primary-foreground border-primary border {{ $step->is_completed ? 'bg-primary' : '' }} ">&check;</button>
+                                <span
+                                    class="{{ $step->is_completed ? 'line-through text-muted-foreground' : '' }}">{{ $step->description }}</span>
+
+                            </form>
+                        </x-card>
+                    @endforeach
+                </div>
+            </div>
+
+        @endif
+
 
         @if ($idea->links)
 

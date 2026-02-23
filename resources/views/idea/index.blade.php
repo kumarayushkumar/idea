@@ -41,7 +41,7 @@
 
         {{-- modal --}}
         <x-modal name="create-idea" title="Create New Idea" data-testId="create-idea-modal">
-            <form x-data="{ status: 'pending', newLink: '', links: [] }" action="{{ route('idea.store') }}" method="POST" class="space-y-6">
+            <form x-data="{ status: 'pending', newLink: '', links: [], newStep: '', steps: [] }" action="{{ route('idea.store') }}" method="POST" class="space-y-6">
                 @csrf
 
                 <x-form.field label="Title" name="title" placeholder="Enter an Idea title" autofocus required />
@@ -62,6 +62,33 @@
 
                 <x-form.field label="Description" type="textarea" name="description" placeholder="Describe your idea" />
 
+                <div>
+                    <fieldset class="space-y-3">
+                        <legend class="label">Steps</legend>
+
+                        <template x-for="(step,index) in steps" :key="step">
+                            <div class="flex gap-2 items-center">
+                                <input type="text" name="steps[]" x-model="step" class="input">
+                                <button @click="steps.splice(index, 1)" type="button"
+                                    data-testId="create-idea-modal-remove-step-button" aria-label="remove step">
+                                    <x-icons.add class="rotate-45" />
+                                </button>
+                            </div>
+                        </template>
+
+                        <div class="flex gap-2 items-center">
+                            <input x-model="newStep" id="new-step" spellcheck="false" class="input flex-1"
+                                placeholder="What need to be done?" data-testId="create-idea-modal-step-input">
+                            <button @click="steps.push(newStep), newStep = ''" type="button"
+                                :disabled="newStep.trim().length === 0" data-testId="create-idea-modal-new-step-button"
+                                aria-label="add new step button">
+                                <x-icons.add ::class="newStep.trim().length === 0 ? 'opacity-50' : ''" />
+                            </button>
+                        </div>
+
+                        {{-- <pre x-text="JSON.stringify(links, null, 2)"></pre> --}}
+                    </fieldset>
+                </div>
 
                 <div>
                     <fieldset class="space-y-3">
@@ -78,8 +105,8 @@
                         </template>
 
                         <div class="flex gap-2 items-center">
-                            <input x-model="newLink" type="url" id="new-link" autocomplete="url"
-                                spellcheck="false" placeholder="http://example.com" class="input flex-1"
+                            <input x-model="newLink" type="url" id="new-link" autocomplete="url" spellcheck="false"
+                                placeholder="http://example.com" class="input flex-1"
                                 data-testId="create-idea-modal-link-input">
                             <button @click="links.push(newLink), newLink = ''" type="button"
                                 :disabled="newLink.trim().length === 0" data-testId="create-idea-modal-add-link-button"

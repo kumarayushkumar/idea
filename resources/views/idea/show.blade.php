@@ -34,7 +34,7 @@
             <p class="text-lg">{{ $idea->description }}</p>
         </x-card>
 
-        @if ($idea->links->count())
+        @if ($idea->links)
 
             <div class="mt-10">
                 <h3 class="font-semibold text-xl">Links</h3>

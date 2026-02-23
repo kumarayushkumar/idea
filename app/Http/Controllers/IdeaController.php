@@ -43,10 +43,7 @@ class IdeaController extends Controller
      */
     public function store(StoreIdeaRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $data = $request->validated();
-        $data['links'] = array_values(array_filter($data['links'] ?? []));
-
-        Auth::user()->ideas()->create($data);
+        Auth::user()->ideas()->create($request->validated());
 
         return to_route('idea.index')->with('success', 'Idea created successfully!');
     }

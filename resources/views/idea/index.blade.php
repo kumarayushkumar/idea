@@ -78,7 +78,7 @@
                         </template>
 
                         <div class="flex gap-2 items-center">
-                            <input x-model="newLink" type="url" name="links[]" id="new-link" autocomplete="url"
+                            <input x-model="newLink" type="url" id="new-link" autocomplete="url"
                                 spellcheck="false" placeholder="http://example.com" class="input flex-1"
                                 data-testId="create-idea-modal-link-input">
                             <button @click="links.push(newLink), newLink = ''" type="button"

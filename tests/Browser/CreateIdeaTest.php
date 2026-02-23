@@ -4,7 +4,7 @@ use App\Models\User;
 
 use function Pest\Laravel\actingAs;
 
-it('create a new idea', function () {
+it('create a new idea', function (): void {
     /** @var User $user */
     $user = User::factory()->create();
     actingAs($user);

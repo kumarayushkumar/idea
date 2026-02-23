@@ -23,7 +23,15 @@
             <div class="grid md:grid-cols-2 gap-6">
                 @forelse ($ideas as $idea)
                     <x-card href="{{ route('idea.show', $idea) }}">
-                        <h3 class="text-foreground font-bold text-lg"> {{ $idea->title }}</h3>
+
+                        @if ($idea->image_path)
+                            <div class="rounded-t-lg overflow-hidden -mx-4 -mt-4">
+                                <img src="{{ asset('storage/' . $idea->image_path) }}" alt="Idea Image"
+                                    class="w-full h-48 object-cover">
+                            </div>
+                        @endif
+
+                        <h3 class="text-foreground font-bold text-lg mt-4"> {{ $idea->title }}</h3>
                         <p class="mt-1 ">{{ $idea->description }}</p>
 
                         <x-idea.status-label class="mt-2"
@@ -41,7 +49,8 @@
 
         {{-- modal --}}
         <x-modal name="create-idea" title="Create New Idea" data-testId="create-idea-modal">
-            <form x-data="{ status: 'pending', newLink: '', links: [], newStep: '', steps: [] }" action="{{ route('idea.store') }}" method="POST" class="space-y-6">
+            <form x-data="{ status: 'pending', newLink: '', links: [], newStep: '', steps: [] }" action="{{ route('idea.store') }}" method="POST" class="space-y-6"
+                enctype="multipart/form-data">
                 @csrf
 
                 <x-form.field label="Title" name="title" placeholder="Enter an Idea title" autofocus required />
@@ -61,6 +70,13 @@
                 </div>
 
                 <x-form.field label="Description" type="textarea" name="description" placeholder="Describe your idea" />
+
+                <div class="space-y-2">
+                    <label for="image" class="label">Featured Image</label>
+
+                    <input type="file" name="image" class="label" accept="image/*">
+                    <x-form.error name="image" />
+                </div>
 
                 <div>
                     <fieldset class="space-y-3">
@@ -105,8 +121,8 @@
                         </template>
 
                         <div class="flex gap-2 items-center">
-                            <input x-model="newLink" type="url" id="new-link" autocomplete="url" spellcheck="false"
-                                placeholder="http://example.com" class="input flex-1"
+                            <input x-model="newLink" type="url" id="new-link" autocomplete="url"
+                                spellcheck="false" placeholder="http://example.com" class="input flex-1"
                                 data-testId="create-idea-modal-link-input">
                             <button @click="links.push(newLink), newLink = ''" type="button"
                                 :disabled="newLink.trim().length === 0" data-testId="create-idea-modal-add-link-button"

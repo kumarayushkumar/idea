@@ -49,8 +49,8 @@
 
         {{-- modal --}}
         <x-modal name="create-idea" title="Create New Idea" data-testId="create-idea-modal">
-            <form x-data="{ status: 'pending', newLink: '', links: [], newStep: '', steps: [] }" action="{{ route('idea.store') }}" method="POST" class="space-y-6"
-                enctype="multipart/form-data">
+            <form x-data="{ status: 'pending', newLink: '', links: [], newStep: '', steps: [], hasImage: false }" action="{{ route('idea.store') }}" method="POST" class="space-y-6"
+                x-bind:enctype="hasImage ? 'multipart/form-data' : 'application/x-www-form-urlencoded'">
                 @csrf
 
                 <x-form.field label="Title" name="title" placeholder="Enter an Idea title" autofocus required />
@@ -74,7 +74,8 @@
                 <div class="space-y-2">
                     <label for="image" class="label">Featured Image</label>
 
-                    <input type="file" name="image" class="label" accept="image/*">
+                    <input type="file" name="image" class="label" accept="image/*"
+                        @change="hasImage = $event.target.files.length > 0">
                     <x-form.error name="image" />
                 </div>
 

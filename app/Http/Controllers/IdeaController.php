@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateIdea;
 use App\Http\Requests\StoreIdeaRequest;
 use App\Http\Requests\UpdateIdeaRequest;
 use App\IdeaStatus;
@@ -41,17 +42,10 @@ class IdeaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreIdeaRequest $request): \Illuminate\Http\RedirectResponse
+    public function store(StoreIdeaRequest $request, CreateIdea $createIdea): \Illuminate\Http\RedirectResponse
     {
 
-        $idea = Auth::user()->ideas()->create($request->safe()->except(['steps', 'image']));
-
-        $idea->steps()->createMany(
-            collect($request->steps)->map(fn ($step): array => ['description' => $step]));
-
-        $imagePath = $request->image->store('idea', 'public');
-
-        $idea->update(['image_path' => $imagePath]);
+        $createIdea->handle($request->safe()->all());
 
         return to_route('idea.index')->with('success', 'Idea created successfully!');
     }

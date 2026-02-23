@@ -55,9 +55,11 @@ class IdeaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Idea $idea): void
+    public function show(Idea $idea): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
-        //
+        return view('idea.show', [
+            'idea' => $idea,
+        ]);
     }
 
     /**
@@ -79,8 +81,11 @@ class IdeaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Idea $idea): void
+    public function destroy(Idea $idea): \Illuminate\Http\RedirectResponse
     {
-        //
+
+        $idea->delete();
+
+        return redirect()->route('idea.index');
     }
 }

@@ -1,12 +1,16 @@
 <nav class="border-b border-border px-6">
     <div class="container mx-auto flex items-center justify-between h-16">
         <a href="/" class="text-lg font-bold">Idea</a>
+
         <div class="flex gap-6 items-center">
 
             @auth
-                <form action="/logout" method="POST">
+                <a href={{ route('profile.edit') }} class="text-sm text-foreground/70 hover:text-foreground transition">Edit
+                    profile</a>
+                <form action="/logout" method="POST" class="flex items-center">
                     @csrf
-                    <button type="submit" data-testId="logout-button" class="text-sm text-foreground/70 hover:text-foreground transition">Logout</button>
+                    <button type="submit" data-testId="logout-button"
+                        class="text-sm text-foreground/70 hover:text-foreground transition">Logout</button>
                 </form>
             @endauth
 

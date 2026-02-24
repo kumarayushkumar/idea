@@ -8,7 +8,8 @@
             </a>
 
             <div class="flex items-center gap-2">
-                <button class="btn btn-outlined flex items-center">
+                <button x-data @click="$dispatch('open-model','edit-idea')" class="btn btn-outlined flex items-center"
+                    data-testId="edit-idea-button">
                     <x-icons.edit />
                     Edit
                 </button>
@@ -38,9 +39,12 @@
             <p class="text-sm text-muted-foreground">{{ $idea->created_at->diffForHumans() }}</p>
 
         </div>
-        <x-card class="mt-6">
-            <p class="text-lg">{{ $idea->description }}</p>
-        </x-card>
+
+        @if ($idea->description)
+            <x-card class="mt-6">
+                <p class="text-lg">{{ $idea->description }}</p>
+            </x-card>
+        @endif
 
         @if ($idea->steps)
 
@@ -82,5 +86,7 @@
             </div>
 
         @endif
+
+        <x-idea.modal :idea="$idea" />
     </div>
 </x-layout>
